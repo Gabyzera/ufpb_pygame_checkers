@@ -1,8 +1,9 @@
 import pygame 
 
 pygame.init()
-preto  = (150, 75, 0)
-branco = (245, 245, 220)
+branco = (255,255,255)
+marrom  = (150, 75, 0)
+bege = (245, 245, 220)
 tamanho = 70
 linhas_colunas = 8
 
@@ -10,20 +11,20 @@ tela = pygame.display.set_mode(((linhas_colunas+2) * tamanho, (linhas_colunas+2)
 nome = pygame.display.set_caption('Xadrez')
 
 #pecas brancas:
-bispo = pygame.transform.scale(pygame.image.load("bispo_v2.png"), (tamanho -2, tamanho -2))
-torre = pygame.transform.scale(pygame.image.load("torre_v2.png"), (tamanho -2, tamanho - 2))
-cavalo = pygame.transform.scale(pygame.image.load("cavalo_v2.png"), (tamanho -2, tamanho - 2))
-rainha = pygame.transform.scale(pygame.image.load("rainha_v2.png"), (tamanho -2, tamanho - 2))
-rei = pygame.transform.scale(pygame.image.load("rei_v2.png"), (tamanho -2, tamanho - 2))
-peao = pygame.transform.scale(pygame.image.load("peao_v2.png"), (tamanho -2, tamanho - 2))
+bispo = pygame.transform.scale(pygame.image.load("assets/sprites/bispo_v2.png"), (tamanho -2, tamanho -2))
+torre = pygame.transform.scale(pygame.image.load("assets/sprites/torre_v2.png"), (tamanho -2, tamanho - 2))
+cavalo = pygame.transform.scale(pygame.image.load("assets/sprites/cavalo_v2.png"), (tamanho -2, tamanho - 2))
+rainha = pygame.transform.scale(pygame.image.load("assets/sprites/rainha_v2.png"), (tamanho -2, tamanho - 2))
+rei = pygame.transform.scale(pygame.image.load("assets/sprites/rei_v2.png"), (tamanho -2, tamanho - 2))
+peao = pygame.transform.scale(pygame.image.load("assets/sprites/peao_v2.png"), (tamanho -2, tamanho - 2))
 
 #pecas pretas:
-bispo_preto = pygame.transform.scale(pygame.image.load("bispo_v1.png"), (tamanho -2, tamanho -2))
-torre_preto = pygame.transform.scale(pygame.image.load("torre_v1.png"), (tamanho -2, tamanho - 2))
-cavalo_preto = pygame.transform.scale(pygame.image.load("cavalo_v1.png"), (tamanho -2, tamanho - 2))
-rainha_preto = pygame.transform.scale(pygame.image.load("rainha_v1.png"), (tamanho -2, tamanho - 2))
-rei_preto = pygame.transform.scale(pygame.image.load("rei_v1.png"), (tamanho -2, tamanho - 2))
-peao_preto = pygame.transform.scale(pygame.image.load("peao_v1.png"), (tamanho -2, tamanho - 2))
+bispo_preto = pygame.transform.scale(pygame.image.load("assets/sprites/bispo_v1.png"), (tamanho -2, tamanho -2))
+torre_preto = pygame.transform.scale(pygame.image.load("assets/sprites/torre_v1.png"), (tamanho -2, tamanho - 2))
+cavalo_preto = pygame.transform.scale(pygame.image.load("assets/sprites/cavalo_v1.png"), (tamanho -2, tamanho - 2))
+rainha_preto = pygame.transform.scale(pygame.image.load("assets/sprites/rainha_v1.png"), (tamanho -2, tamanho - 2))
+rei_preto = pygame.transform.scale(pygame.image.load("assets/sprites/rei_v1.png"), (tamanho -2, tamanho - 2))
+peao_preto = pygame.transform.scale(pygame.image.load("assets/sprites/peao_v1.png"), (tamanho -2, tamanho - 2))
 
 tela.fill(branco)
 
@@ -31,9 +32,9 @@ count = 0
 for i in range(1,linhas_colunas+1):
     for z in range(1,linhas_colunas+1):
         if count % 2 == 0:
-            pygame.draw.rect(tela, branco,[tamanho*z,tamanho*i,tamanho,tamanho])
+            pygame.draw.rect(tela, bege,[tamanho*z,tamanho*i,tamanho,tamanho])
         else:
-            pygame.draw.rect(tela, preto, [tamanho*z,tamanho*i,tamanho,tamanho])
+            pygame.draw.rect(tela, marrom, [tamanho*z,tamanho*i,tamanho,tamanho])
         count +=1
     count-=1
 #pecas brancas:
@@ -73,7 +74,7 @@ tela.blit(peao_preto, (tamanho*7 + 1, tamanho*2 + 1))
 tela.blit(peao_preto, (tamanho*8 + 1, tamanho*2 + 1))
 
 
-pygame.draw.rect(tela,preto,[tamanho,tamanho,linhas_colunas*tamanho,linhas_colunas*tamanho],1)
+pygame.draw.rect(tela,bege,[tamanho,tamanho,linhas_colunas*tamanho,linhas_colunas*tamanho],1)
 
 pygame.display.update()
 
