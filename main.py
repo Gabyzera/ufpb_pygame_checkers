@@ -1,14 +1,15 @@
 import pygame 
 
 pygame.init()
-preto = (150, 75, 0)
+preto  = (150, 75, 0)
 branco = (245, 245, 220)
 tamanho = 70
 linhas_colunas = 8
 
-#pecas brancas:
 tela = pygame.display.set_mode(((linhas_colunas+2) * tamanho, (linhas_colunas+2)*tamanho))
 nome = pygame.display.set_caption('Xadrez')
+
+#pecas brancas:
 bispo = pygame.transform.scale(pygame.image.load("bispo_v2.png"), (tamanho -2, tamanho -2))
 torre = pygame.transform.scale(pygame.image.load("torre_v2.png"), (tamanho -2, tamanho - 2))
 cavalo = pygame.transform.scale(pygame.image.load("cavalo_v2.png"), (tamanho -2, tamanho - 2))
