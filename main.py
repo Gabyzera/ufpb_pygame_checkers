@@ -81,12 +81,11 @@ def quadrado(square,border): ##Pinta quadrado limpo novamente:
             pygame.draw.rect(tela, marrom,[tamanho*(square[1]),tamanho*(square[0]),tamanho,tamanho],5)
         else:
             pygame.draw.rect(tela, bege,[tamanho*(square[1]),tamanho*(square[0]),tamanho,tamanho],5)
-    else:
+    elif border == False:
         if ((((square[0])%2) == 0) and (((square[1])%2) != 0)) or ((((square[0])%2) != 0) and (((square[1])%2) == 0)): 
             pygame.draw.rect(tela, marrom,[tamanho*(square[1]),tamanho*(square[0]),tamanho,tamanho])
         else:
             pygame.draw.rect(tela, bege,[tamanho*(square[1]),tamanho*(square[0]),tamanho,tamanho])
-    pygame.display.update()        
 
 def select(pos,possibilidades,turn):
     keys = list(posicoes.keys())
@@ -105,60 +104,51 @@ def select(pos,possibilidades,turn):
                 for i in range(len(values)): 
                   if (values[i] == ((pos[0]-1),(pos[1]+1))) and ('preto' in keys[i]): 
                        pygame.draw.rect(tela, azul,[tamanho*(pos[1]+1),tamanho*(pos[0]-1),tamanho,tamanho],5)
-                       pygame.display.update()
                        possibilidades.append(((pos[0]-1),(pos[1]+1)))
 
             if ((pos[0]-1),(pos[1]-1)) in values: ## Se houver um inimigo para comer na esquerda
                 for i in range(len(values)):
                   if (values[i] == ((pos[0]-1),(pos[1]-1))) and ('preto' in keys[i]): 
                        pygame.draw.rect(tela, azul,[tamanho*(pos[1]-1),tamanho*(pos[0]-1),tamanho,tamanho],5)
-                       pygame.display.update()
                        possibilidades.append(((pos[0]-1),(pos[1]-1)))
                 
-            if ((pos[0]-1),pos[1]) not in values: ## Movimento comum
+            if (((pos[0]-1),pos[1]) not in values) and (pos[0]-1) != 0 and (pos[1]) != 0: ## Movimento comum
                 pygame.draw.rect(tela, azul,[tamanho*(pos[1]),tamanho*(pos[0]-1),tamanho,tamanho],5)
-                pygame.display.update()
                 possibilidades.append(((pos[0]-1),(pos[1])))
 
-            if pos[0] == 7: ## Primeiro movimento do peao
+            if pos[0] == 7 and (((pos[0]-2),pos[1]) not in values) and (((pos[0]-1),pos[1]) not in values): ## Primeiro movimento do peao
                 pygame.draw.rect(tela, azul,[tamanho*(pos[1]),tamanho*(pos[0]-2),tamanho,tamanho],5)
-                pygame.display.update()
                 possibilidades.append(((pos[0]-2),(pos[1])))     
         else:
             pygame.mixer.music.load("assets/sounds/wrong.ogg")
             pygame.mixer.music.play(1) 
-            print('run3')
-
 
     if turn == -1: ## Turno das pretas
-        if 'Ppeao_preto' in peca: ##movimento do peao preto
+        if 'Ppeao_preto' in peca: ## movimento do peao preto
             if ((pos[0]+1),(pos[1]-1)) in values: ## Se houver um inimigo para comer na direita
                 for i in range(len(values)): 
                   if (values[i] == ((pos[0]+1),(pos[1]-1))) and ('branco' in keys[i]): 
                        pygame.draw.rect(tela, azul,[tamanho*(pos[1]-1),tamanho*(pos[0]+1),tamanho,tamanho],5)
-                       pygame.display.update()
                        possibilidades.append(((pos[0]+1),(pos[1]-1)))
 
             if ((pos[0]+1),(pos[1]+1)) in values: ## Se houver um inimigo para comer na esquerda
                 for i in range(len(values)):
                   if (values[i] == ((pos[0]+1),(pos[1]+1))) and ('branco' in keys[i]): 
                        pygame.draw.rect(tela, azul,[tamanho*(pos[1]+1),tamanho*(pos[0]+1),tamanho,tamanho],5)
-                       pygame.display.update()
                        possibilidades.append(((pos[0]+1),(pos[1]+1)))
                 
             if ((pos[0]+1),pos[1]) not in values: ## Movimento padrão
                 pygame.draw.rect(tela, azul,[tamanho*(pos[1]),tamanho*(pos[0]+1),tamanho,tamanho],5)
-                pygame.display.update()
                 possibilidades.append(((pos[0]+1),(pos[1]))) 
 
             if pos[0] == 2: ## Primeiro movimento do peao
                 pygame.draw.rect(tela, azul,[tamanho*(pos[1]),tamanho*(pos[0]+2),tamanho,tamanho],5)
-                pygame.display.update()
                 possibilidades.append(((pos[0]+2),(pos[1])))    
         else:
             pygame.mixer.music.load("assets/sounds/wrong.ogg")
-            pygame.mixer.music.play(1)       
-            print('run2') 
+            pygame.mixer.music.play(1)    
+    
+    pygame.display.update()   
 
     return possibilidades,pos
     
@@ -182,7 +172,7 @@ def move(pos,Old_Pos,posicoes,turn):
          quadrado(pos,False)
 
 
-    for j in range(len(values)): ## mostrando qual peca vai ser movida
+    for j in range(len(values)): ## Mostrando qual peca vai ser movida
       if values[j] == Old_Pos:
         peca = keys[j]
         posicoes[peca] = pos ## Mudando a posicao
@@ -227,7 +217,6 @@ posicoes = Start() ##Iniciando o Jogo
 
 jogo = True
 selecao = () ##tupla para armazenar selecao do jogador
-selecionado = False
 possibilidades = []
 turno = 1
 while jogo:
@@ -244,7 +233,6 @@ while jogo:
                     turno = 1
                 else: ## Movendo
                     posicoes,turno = move(selecao,OldPos,posicoes,turno)
-                    selecionado = False
                     for p in range(len(possibilidades)): ##Limpando selecao
                       quadrado(possibilidades[p],True) 
                 possibilidades = [] ##Limpando possibilidades
@@ -257,7 +245,5 @@ while jogo:
                     for i in range(len(list(posicoes.values()))):
                         if (list(posicoes.values())[i] == selecao) and (((turno == 1) and ('branco' in list(posicoes.keys())[i])) or ((turno == -1) and ('preto' in list(posicoes.keys())[i]))):
                             possibilidades, OldPos = select(selecao,possibilidades,turno)
-                            selecionado = True
-                            print(posicoes)
 
 pygame.quit()
