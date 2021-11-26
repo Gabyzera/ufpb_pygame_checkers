@@ -70,7 +70,7 @@ def Start():
  pygame.display.update()
 
  ##Guardando posições iniciais das peças no sistema
- posicoes_iniciais = {'Ptorre_preto1' : (1,1),'Ptorre_preto2':(1,8),'Pcavalo_preto1':(1,2),'Pcavalo_preto2':(1,7),'Pbispo_preto1':(1,3),'Pbispo_preto2':(1,6),'Prainha_preto':(1,4),'Prei_preto':(1,5),'Ppeao_preto1':(2,1),'Ppeao_preto2':(2,2),'Ppeao_preto3':(2,3),'Ppeao_preto4':(2,4),'Ppeao_preto5':(2,5),'Ppeao_preto6':(2,6),'Ppeao_preto7':(2,7),'Ppeao_preto8':(2,8),'Ptorre_branco1' : (8,1),'Ptorre_branco2':(8,8),'Pcavalo_branco1':(8,2),'Pcavalo_branco2':(8,7),'Pbispo_branco1':(8,3),'Pbispo_branco2':(8,6),'Prainha_branco':(8,4),'Prei_branco':(8,5),'Ppeao_branco1':(7,1),'Ppeao_branco2':(7,2),'Ppeao_branco3':(7,3),'Ppeao_branco4':(7,4),'Ppeao_branco5':(7,5),'Ppeao_branco6':(7,6),'Ppeao_branco7':(7,7),'Ppeao_branco8':(7,8)}
+ posicoes_iniciais = {'\nPtorre_preto1' : (1,1),'\nPtorre_preto2':(1,8),'\nPcavalo_preto1':(1,2),'\nPcavalo_preto2':(1,7),'\nPbispo_preto1':(1,3),'\nPbispo_preto2':(1,6),'\nPrainha_preto':(1,4),'\nPrei_preto':(1,5),'\nPpeao_preto1':(2,1),'\nPpeao_preto2':(2,2),'\nPpeao_preto3':(2,3),'\nPpeao_preto4':(2,4),'\nPpeao_preto5':(2,5),'\nPpeao_preto6':(2,6),'\nPpeao_preto7':(2,7),'\nPpeao_preto8':(2,8),'\nPtorre_branco1' : (8,1),'\nPtorre_branco2':(8,8),'\nPcavalo_branco1':(8,2),'\nPcavalo_branco2':(8,7),'\nPbispo_branco1':(8,3),'\nPbispo_branco2':(8,6),'\nPrainha_branco':(8,4),'\nPrei_branco':(8,5),'\nPpeao_branco1':(7,1),'\nPpeao_branco2':(7,2),'\nPpeao_branco3':(7,3),'\nPpeao_branco4':(7,4),'\nPpeao_branco5':(7,5),'\nPpeao_branco6':(7,6),'\nPpeao_branco7':(7,7),'\nPpeao_branco8':(7,8)}
  ##
 
  return posicoes_iniciais
@@ -97,6 +97,7 @@ def select(pos,possibilidades,turn):
     if possibilidades != []: ## Limpando selecoes
         for p in range(len(possibilidades)):
             quadrado(possibilidades[p],True)
+        possibilidades = [] 
 
     if turn == 1: ## Turno das brancas
         if 'Ppeao_branco' in peca: ##movimento do peao
@@ -119,9 +120,6 @@ def select(pos,possibilidades,turn):
             if pos[0] == 7 and (((pos[0]-2),pos[1]) not in values) and (((pos[0]-1),pos[1]) not in values): ## Primeiro movimento do peao
                 pygame.draw.rect(tela, azul,[tamanho*(pos[1]),tamanho*(pos[0]-2),tamanho,tamanho],5)
                 possibilidades.append(((pos[0]-2),(pos[1])))     
-        else:
-            pygame.mixer.music.load("assets/sounds/wrong.ogg")
-            pygame.mixer.music.play(1) 
 
     if turn == -1: ## Turno das pretas
         if 'Ppeao_preto' in peca: ## movimento do peao preto
@@ -144,26 +142,22 @@ def select(pos,possibilidades,turn):
             if pos[0] == 2: ## Primeiro movimento do peao
                 pygame.draw.rect(tela, azul,[tamanho*(pos[1]),tamanho*(pos[0]+2),tamanho,tamanho],5)
                 possibilidades.append(((pos[0]+2),(pos[1])))    
-        else:
-            pygame.mixer.music.load("assets/sounds/wrong.ogg")
-            pygame.mixer.music.play(1)    
     
-    pygame.display.update()   
-
     return possibilidades,pos
     
-def move(pos,Old_Pos,posicoes,turn):
+def move(pos,Old_Pos,posicoes,turn,possibilidades):
     keys = list(posicoes.keys())
     values = list(posicoes.values())
-    if pos not in possibilidades: ## Para que o jogador siga as regras
-        pygame.mixer.music.load("assets/sounds/wrong.ogg")
-        pygame.mixer.music.play(0) 
-        return posicoes,turn
-
-    turn = -turn ## Mudando o turno
 
     for p in range(len(possibilidades)): ##Limpando selecao
         quadrado(possibilidades[p],True)
+    
+    if pos not in possibilidades: ## Para que o jogador siga as regras
+        pygame.mixer.music.load("assets/sounds/wrong.ogg")
+        pygame.mixer.music.play(1) 
+        return posicoes,turn, possibilidades
+
+    turn = -turn ## Mudando o turno
 
     if pos in values:
      for i in range(len(values)): ## Retirando a peça anterior da memoria em caso de comer
@@ -209,8 +203,7 @@ def move(pos,Old_Pos,posicoes,turn):
         tela.blit(rei_preto, (tamanho*pos[1] + 1, tamanho*pos[0] + 1))
     ##
     
-    pygame.display.update()
-    return posicoes, turn
+    return posicoes, turn, possibilidades 
 ##
 
 posicoes = Start() ##Iniciando o Jogo
@@ -219,10 +212,13 @@ jogo = True
 selecao = () ##tupla para armazenar selecao do jogador
 possibilidades = []
 turno = 1
+OldPos = 0
 while jogo:
     for evento in pygame.event.get():
         if (evento.type == pygame.QUIT):
             jogo = False
+            for posicao in posicoes:
+                print(f'{posicao} - {posicoes[posicao]}')
         elif evento.type == pygame.MOUSEBUTTONDOWN:
             location = pygame.mouse.get_pos() #(x, y) localização do mouse
             coluna = location[0] // tamanho
@@ -232,10 +228,7 @@ while jogo:
                     posicoes = Start()
                     turno = 1
                 else: ## Movendo
-                    posicoes,turno = move(selecao,OldPos,posicoes,turno)
-                    for p in range(len(possibilidades)): ##Limpando selecao
-                      quadrado(possibilidades[p],True) 
-                possibilidades = [] ##Limpando possibilidades
+                    posicoes,turno,possibilidades = move(selecao,OldPos,posicoes,turno,possibilidades)
                 selecao = () ##tornar seleçao vazia
                
             else:
@@ -245,5 +238,6 @@ while jogo:
                     for i in range(len(list(posicoes.values()))):
                         if (list(posicoes.values())[i] == selecao) and (((turno == 1) and ('branco' in list(posicoes.keys())[i])) or ((turno == -1) and ('preto' in list(posicoes.keys())[i]))):
                             possibilidades, OldPos = select(selecao,possibilidades,turno)
+            pygame.display.update()
 
 pygame.quit()
