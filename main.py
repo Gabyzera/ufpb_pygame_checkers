@@ -11,27 +11,18 @@ tamanho = 70  # tamanho de cada quadrado
 linhas_colunas = 8
 
 tela = pygame.display.set_mode(((linhas_colunas + 2) * tamanho, (linhas_colunas + 2) * tamanho))
-nome = pygame.display.set_caption('Xadrez')
+nome = pygame.display.set_caption('Damas | Chekers')
 
 # adicionando sprites:
-bispo_branco = pygame.transform.scale(pygame.image.load("assets/sprites/bispo_v2.png"), (tamanho - 2, tamanho - 2))
-torre_branco = pygame.transform.scale(pygame.image.load("assets/sprites/torre_v2.png"), (tamanho - 2, tamanho - 2))
-cavalo_branco = pygame.transform.scale(pygame.image.load("assets/sprites/cavalo_v2.png"), (tamanho - 2, tamanho - 2))
-rainha_branco = pygame.transform.scale(pygame.image.load("assets/sprites/rainha_v2.png"), (tamanho - 2, tamanho - 2))
-rei_branco = pygame.transform.scale(pygame.image.load("assets/sprites/rei_v2.png"), (tamanho - 2, tamanho - 2))
-peao_branco = pygame.transform.scale(pygame.image.load("assets/sprites/peao_v2.png"), (tamanho - 2, tamanho - 2))
-bispo_preto = pygame.transform.scale(pygame.image.load("assets/sprites/bispo_v1.png"), (tamanho - 2, tamanho - 2))
-torre_preto = pygame.transform.scale(pygame.image.load("assets/sprites/torre_v1.png"), (tamanho - 2, tamanho - 2))
-cavalo_preto = pygame.transform.scale(pygame.image.load("assets/sprites/cavalo_v1.png"), (tamanho - 2, tamanho - 2))
-rainha_preto = pygame.transform.scale(pygame.image.load("assets/sprites/rainha_v1.png"), (tamanho - 2, tamanho - 2))
-rei_preto = pygame.transform.scale(pygame.image.load("assets/sprites/rei_v1.png"), (tamanho - 2, tamanho - 2))
-peao_preto = pygame.transform.scale(pygame.image.load("assets/sprites/peao_v1.png"), (tamanho - 2, tamanho - 2))
-
+dama_clara = pygame.transform.scale(pygame.image.load("assets/sprites/dama_v2.png"), (tamanho - 2, tamanho - 2))
+dama_escura = pygame.transform.scale(pygame.image.load("assets/sprites/dama_v1.png"), (tamanho - 2, tamanho - 2))
+rainha_clara = pygame.transform.scale(pygame.image.load("assets/sprites/rainha_v1.png"), (tamanho - 2, tamanho - 2))
+rainha_escura = pygame.transform.scale(pygame.image.load("assets/sprites/rainha_v2.png"), (tamanho - 2, tamanho - 2))
 
 # Funcoes
-
 def Start():
     tela.fill(preto)
+    tela.blit(pygame.font.SysFont('Comic Sans MS', 30).render('RECOMEÇAR', False, azul), (250, 15))
 
     count = 0
     for i in range(1, linhas_colunas + 1):
@@ -43,47 +34,20 @@ def Start():
             count += 1
         count -= 1
 
-    # pecas brancas:
-    tela.blit(torre_branco, (tamanho * 1 + 1, tamanho * 8 + 1))
-    tela.blit(torre_branco, (tamanho * 8 + 1, tamanho * 8 + 1))
-    tela.blit(cavalo_branco, (tamanho * 2 + 1, tamanho * 8 + 1))
-    tela.blit(cavalo_branco, (tamanho * 7 + 1, tamanho * 8 + 1))
-    tela.blit(bispo_branco, (tamanho * 3 + 1, tamanho * 8 + 1))
-    tela.blit(bispo_branco, (tamanho * 6 + 1, tamanho * 8 + 1))
-    tela.blit(rainha_branco, (tamanho * 4 + 1, tamanho * 8 + 1))
-    tela.blit(rei_branco, (tamanho * 5 + 1, tamanho * 8 + 1))
-
-    for i in range(1, 9):
-        tela.blit(peao_branco, (tamanho * i + 1, tamanho * 7 + 1))
-
-    # pecas pretas:
-    tela.blit(torre_preto, (tamanho * 1 + 1, tamanho * 1 + 1))
-    tela.blit(torre_preto, (tamanho * 8 + 1, tamanho * 1 + 1))
-    tela.blit(cavalo_preto, (tamanho * 2 + 1, tamanho * 1 + 1))
-    tela.blit(cavalo_preto, (tamanho * 7 + 1, tamanho * 1 + 1))
-    tela.blit(bispo_preto, (tamanho * 3 + 1, tamanho * 1 + 1))
-    tela.blit(bispo_preto, (tamanho * 6 + 1, tamanho * 1 + 1))
-    tela.blit(rainha_preto, (tamanho * 4 + 1, tamanho * 1 + 1))
-    tela.blit(rei_preto, (tamanho * 5 + 1, tamanho * 1 + 1))
-    for i in range(1, 9):
-        tela.blit(peao_preto, (tamanho * i + 1, tamanho * 2 + 1))
-
-    tela.blit(pygame.font.SysFont('Comic Sans MS', 30).render('RECOMEÇAR', False, azul), (250, 15))
+    # colocando pecas:
+    for i in range(2, 9,2):
+        tela.blit(dama_clara, (tamanho * i + 1, tamanho * 7 + 1))
+        tela.blit(dama_escura, (tamanho * i + 1, tamanho * 1 + 1))
+        tela.blit(dama_escura, (tamanho * i + 1, tamanho * 3 + 1))
+    for i in range(1, 9, 2):
+        tela.blit(dama_escura, (tamanho * i + 1, tamanho * 2 + 1))
+        tela.blit(dama_clara, (tamanho * i + 1, tamanho * 6 + 1))
+        tela.blit(dama_clara, (tamanho * i + 1, tamanho * 8 + 1))
 
     pygame.display.update()
 
     # Guardando posições iniciais das peças no sistema
-    posicoes_iniciais = {'\nPtorre_preto1': (1, 1), '\nPtorre_preto2': (1, 8), '\nPcavalo_preto1': (1, 2),
-                         '\nPcavalo_preto2': (1, 7), '\nPbispo_preto1': (1, 3), '\nPbispo_preto2': (1, 6),
-                         '\nPrainha_preto': (1, 4), '\nPrei_preto': (1, 5), '\nPpeao_preto1': (2, 1),
-                         '\nPpeao_preto2': (2, 2), '\nPpeao_preto3': (2, 3), '\nPpeao_preto4': (2, 4),
-                         '\nPpeao_preto5': (2, 5), '\nPpeao_preto6': (2, 6), '\nPpeao_preto7': (2, 7),
-                         '\nPpeao_preto8': (2, 8), '\nPtorre_branco1': (8, 1), '\nPtorre_branco2': (8, 8),
-                         '\nPcavalo_branco1': (8, 2), '\nPcavalo_branco2': (8, 7), '\nPbispo_branco1': (8, 3),
-                         '\nPbispo_branco2': (8, 6), '\nPrainha_branco': (8, 4), '\nPrei_branco': (8, 5),
-                         '\nPpeao_branco1': (7, 1), '\nPpeao_branco2': (7, 2), '\nPpeao_branco3': (7, 3),
-                         '\nPpeao_branco4': (7, 4), '\nPpeao_branco5': (7, 5), '\nPpeao_branco6': (7, 6),
-                         '\nPpeao_branco7': (7, 7), '\nPpeao_branco8': (7, 8)}
+    posicoes_iniciais = {'Pdama_branca1': (6, 1), 'Pdama_branca2':(6,3), 'Pdama_branca3':(6,5), 'Pdama_branca4':(6,7), 'Pdama_branca5':(7,2), 'Pdama_branca6':(7,4),'Pdama_branca7':(7,6), 'Pdama_branca8':(7,8),'Pdama_branca9':(8,1),'Pdama_branca10':(8,3),'Pdama_branca11':(8,5),'Pdama_branca12':(8,7), 'Pdama_preta1': (3, 2), 'Pdama_preta2':(3,4), 'Pdama_preta3':(3,6), 'Pdama_preta4':(3,8), 'Pdama_preta5':(2,1), 'Pdama_preta6':(2,3),'Pdama_preta7':(2,5), 'Pdama_preta8':(2,7),'Pdama_preta9':(1,2),'Pdama_preta10':(1,4),'Pdama_preta11':(1,6),'Pdama_preta12':(1,8)}
 
     return posicoes_iniciais
 
@@ -117,8 +81,7 @@ def select(pos, possibilidades, turn):
             quadrado(possibilidades[p], True)
         possibilidades = []
 
-    if turn == 1:  # Turno das brancas
-        if 'Ppeao_branco' in peca:  # movimento do peao
+    if 'Ppeao_branco' in peca:  # movimento do peao
             if ((pos[0] - 1), (pos[1] + 1)) in values:  # Se houver um inimigo para comer na direita
                 for i in range(len(values)):
                     if (values[i] == ((pos[0] - 1), (pos[1] + 1))) and ('preto' in keys[i]):
@@ -142,8 +105,7 @@ def select(pos, possibilidades, turn):
                 pygame.draw.rect(tela, azul, [tamanho * (pos[1]), tamanho * (pos[0] - 2), tamanho, tamanho], 5)
                 possibilidades.append(((pos[0] - 2), (pos[1])))
 
-    if turn == -1:  # Turno das pretas
-        if 'Ppeao_preto' in peca:  # movimento do peao preto
+    if 'Ppeao_preto' in peca:  # movimento do peao preto
             if ((pos[0] + 1), (pos[1] - 1)) in values:  # Se houver um inimigo para comer na direita
                 for i in range(len(values)):
                     if (values[i] == ((pos[0] + 1), (pos[1] - 1))) and ('branco' in keys[i]):
@@ -205,31 +167,14 @@ def move(pos, Old_Pos, posicoes, turn, possibilidades):
     quadrado(Old_Pos, False)  # limpando local anterior da peca
 
     # Colocando a peca na nova posicao
-
-    if 'Ppeao_branco' in peca:
-        tela.blit(peao_branco, (tamanho * pos[1] + 1, tamanho * pos[0] + 1))
+    if 'dama' in peca:
+        tela.blit(dama_clara, (tamanho * pos[1] + 1, tamanho * pos[0] + 1))
     if 'Ptorre_branco' in peca:
-        tela.blit(torre_branco, (tamanho * pos[1] + 1, tamanho * pos[0] + 1))
+        tela.blit(dama_escura, (tamanho * pos[1] + 1, tamanho * pos[0] + 1))
     if 'Pcavalo_branco' in peca:
-        tela.blit(cavalo_branco, (tamanho * pos[1] + 1, tamanho * pos[0] + 1))
+        tela.blit(rainha_clara, (tamanho * pos[1] + 1, tamanho * pos[0] + 1))
     if 'Pbispo_branco' in peca:
-        tela.blit(bispo_branco, (tamanho * pos[1] + 1, tamanho * pos[0] + 1))
-    if 'Prainha_branco' in peca:
-        tela.blit(rainha_branco, (tamanho * pos[1] + 1, tamanho * pos[0] + 1))
-    if 'Prei_preto' in peca:
-        tela.blit(rei_branco, (tamanho * pos[1] + 1, tamanho * pos[0] + 1))
-    if 'Ppeao_preto' in peca:
-        tela.blit(peao_preto, (tamanho * pos[1] + 1, tamanho * pos[0] + 1))
-    if 'Ptorre_branco' in peca:
-        tela.blit(torre_preto, (tamanho * pos[1] + 1, tamanho * pos[0] + 1))
-    if 'Pcavalo_preto' in peca:
-        tela.blit(cavalo_preto, (tamanho * pos[1] + 1, tamanho * pos[0] + 1))
-    if 'Pbispo_preto' in peca:
-        tela.blit(bispo_preto, (tamanho * pos[1] + 1, tamanho * pos[0] + 1))
-    if 'Prainha_preto' in peca:
-        tela.blit(rainha_preto, (tamanho * pos[1] + 1, tamanho * pos[0] + 1))
-    if 'Prei_preto' in peca:
-        tela.blit(rei_preto, (tamanho * pos[1] + 1, tamanho * pos[0] + 1))
+        tela.blit(rainha_escura, (tamanho * pos[1] + 1, tamanho * pos[0] + 1))
 
     return posicoes, turn, possibilidades
 
