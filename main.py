@@ -81,52 +81,48 @@ def select(pos, possibilidades, turn):
             quadrado(possibilidades[p], True)
         possibilidades = []
 
-    if 'Ppeao_branco' in peca:  # movimento do peao
+    if 'Pdama_branca' in peca:  # movimento do peao
             if ((pos[0] - 1), (pos[1] + 1)) in values:  # Se houver um inimigo para comer na direita
                 for i in range(len(values)):
-                    if (values[i] == ((pos[0] - 1), (pos[1] + 1))) and ('preto' in keys[i]):
-                        pygame.draw.rect(tela, azul, [tamanho * (pos[1] + 1), tamanho * (pos[0] - 1), tamanho, tamanho],
-                                         5)
-                        possibilidades.append(((pos[0] - 1), (pos[1] + 1)))
+                    if (values[i] == ((pos[0] - 1), (pos[1] + 1))) and ('preta' in keys[i]) and ((pos[0] - 2), (pos[1] + 2)) not in values and (pos[0] - 2) != 0 and (pos[0] - 2) != 9 and (pos[1] + 2) != 0 and (pos[1] + 2) != 9:
+                        pygame.draw.rect(tela, azul, [tamanho * (pos[1] + 2), tamanho * (pos[0] - 2), tamanho, tamanho],5)
+                        possibilidades.append(((pos[0] - 2), (pos[1] + 2)))
 
-            if ((pos[0] - 1), (pos[1] - 1)) in values:  # Se houver um inimigo para comer na esquerda
+            elif ((pos[0] - 1), (pos[1] - 1)) in values:  # Se houver um inimigo para comer na esquerda
                 for i in range(len(values)):
-                    if (values[i] == ((pos[0] - 1), (pos[1] - 1))) and ('preto' in keys[i]):
-                        pygame.draw.rect(tela, azul, [tamanho * (pos[1] - 1), tamanho * (pos[0] - 1), tamanho, tamanho],
-                                         5)
-                        possibilidades.append(((pos[0] - 1), (pos[1] - 1)))
+                    if (values[i] == ((pos[0] - 1), (pos[1] - 1))) and ('preta' in keys[i]) and ((pos[0] - 2), (pos[1] - 2)) not in values and (pos[0] - 2) != 0 and (pos[0] - 2) != 9 and (pos[1] - 2) != 0 and (pos[1] - 2) != 9:
+                        pygame.draw.rect(tela, azul, [tamanho * (pos[1] - 2), tamanho * (pos[0] - 2), tamanho, tamanho],5)
+                        possibilidades.append(((pos[0] - 2), (pos[1] - 2)))
 
-            if (((pos[0] - 1), pos[1]) not in values) and (pos[0] - 1) != 0 and (pos[1]) != 0:  # Movimento comum
-                pygame.draw.rect(tela, azul, [tamanho * (pos[1]), tamanho * (pos[0] - 1), tamanho, tamanho], 5)
-                possibilidades.append(((pos[0] - 1), (pos[1])))
+            else:
+                if (((pos[0] - 1), pos[1] +1) not in values) and (pos[0] - 1) != 0 and (pos[0] - 1) != 9 and (pos[1] +1) != 0 and (pos[1] +1) != 9:  # Movimento comum
+                  pygame.draw.rect(tela, azul, [tamanho * (pos[1]+1), tamanho * (pos[0] - 1), tamanho, tamanho], 5)
+                  possibilidades.append(((pos[0] - 1), (pos[1]+1)))
+                if (((pos[0] - 1), pos[1] -1) not in values) and (pos[0] - 1) != 0 and (pos[0] - 1) != 9 and (pos[1] -1) != 0 and (pos[1] -1) != 9:  # Movimento comum
+                  pygame.draw.rect(tela, azul, [tamanho * (pos[1]-1), tamanho * (pos[0] - 1), tamanho, tamanho], 5)
+                  possibilidades.append(((pos[0] - 1), (pos[1]-1)))
 
-            if pos[0] == 7 and (((pos[0] - 2), pos[1]) not in values) and (
-                    ((pos[0] - 1), pos[1]) not in values):  # Primeiro movimento do peao
-                pygame.draw.rect(tela, azul, [tamanho * (pos[1]), tamanho * (pos[0] - 2), tamanho, tamanho], 5)
-                possibilidades.append(((pos[0] - 2), (pos[1])))
 
-    if 'Ppeao_preto' in peca:  # movimento do peao preto
-            if ((pos[0] + 1), (pos[1] - 1)) in values:  # Se houver um inimigo para comer na direita
+    if 'Pdama_preta' in peca:  # movimento do peao preto
+            if ((pos[0] + 1), (pos[1] + 1)) in values:  # Se houver um inimigo para comer na direita
                 for i in range(len(values)):
-                    if (values[i] == ((pos[0] + 1), (pos[1] - 1))) and ('branco' in keys[i]):
-                        pygame.draw.rect(tela, azul, [tamanho * (pos[1] - 1), tamanho * (pos[0] + 1), tamanho, tamanho],
-                                         5)
-                        possibilidades.append(((pos[0] + 1), (pos[1] - 1)))
+                    if (values[i] == ((pos[0] + 1), (pos[1] + 1))) and ('branca' in keys[i]) and ((pos[0] + 2), (pos[1] + 2)) not in values and (pos[0] + 2) != 0 and (pos[0] + 2) != 9 and (pos[1] + 2) != 0 and (pos[1] + 2) != 9:
+                        pygame.draw.rect(tela, azul, [tamanho * (pos[1] + 2), tamanho * (pos[0] + 2), tamanho, tamanho],5)
+                        possibilidades.append(((pos[0] + 2), (pos[1] + 2)))
 
-            if ((pos[0] + 1), (pos[1] + 1)) in values:  # Se houver um inimigo para comer na esquerda
+            elif ((pos[0] + 1), (pos[1] - 1)) in values:  # Se houver um inimigo para comer na esquerda
                 for i in range(len(values)):
-                    if (values[i] == ((pos[0] + 1), (pos[1] + 1))) and ('branco' in keys[i]):
-                        pygame.draw.rect(tela, azul, [tamanho * (pos[1] + 1), tamanho * (pos[0] + 1), tamanho, tamanho],
-                                         5)
-                        possibilidades.append(((pos[0] + 1), (pos[1] + 1)))
+                    if (values[i] == ((pos[0] + 1), (pos[1] - 1))) and ('branca' in keys[i]) and ((pos[0] + 2), (pos[1] - 2)) not in values and (pos[0] + 2) != 0 and (pos[0] + 2) != 9 and (pos[1] - 2) != 0 and (pos[1] - 2) != 9:
+                        pygame.draw.rect(tela, azul, [tamanho * (pos[1] - 2), tamanho * (pos[0] + 2), tamanho, tamanho],5)
+                        possibilidades.append(((pos[0] + 2), (pos[1] - 2)))
 
-            if (((pos[0] + 1), pos[1]) not in values) and (pos[0] + 1) != 9 and (pos[1]) != 9:  # Movimento comum
-                pygame.draw.rect(tela, azul, [tamanho * (pos[1]), tamanho * (pos[0] + 1), tamanho, tamanho], 5)
-                possibilidades.append(((pos[0] + 1), (pos[1])))
-
-            if pos[0] == 2 and (((pos[0] + 2), pos[1]) not in values) and (((pos[0] + 1), pos[1]) not in values):  # Primeiro movimento do peao
-                pygame.draw.rect(tela, azul, [tamanho * (pos[1]), tamanho * (pos[0] + 2), tamanho, tamanho], 5)
-                possibilidades.append(((pos[0] + 2), (pos[1])))
+            else:
+                if (((pos[0] + 1), pos[1] +1) not in values) and (pos[0] + 1) != 0 and (pos[0] + 1) != 9 and (pos[1] +1) != 0 and (pos[1] +1) != 9:  # Movimento comum
+                  pygame.draw.rect(tela, azul, [tamanho * (pos[1]+1), tamanho * (pos[0] + 1), tamanho, tamanho], 5)
+                  possibilidades.append(((pos[0] + 1), (pos[1]+1)))
+                if (((pos[0] + 1), pos[1] -1) not in values) and (pos[0] + 1) != 0 and (pos[0] + 1) != 9 and (pos[1] - 1) != 0 and (pos[1] -1) != 9:  # Movimento comum
+                  pygame.draw.rect(tela, azul, [tamanho * (pos[1]-1), tamanho * (pos[0] + 1), tamanho, tamanho], 5)
+                  possibilidades.append(((pos[0] + 1), (pos[1]-1)))
 
     return possibilidades, pos
 
@@ -167,13 +163,13 @@ def move(pos, Old_Pos, posicoes, turn, possibilidades):
     quadrado(Old_Pos, False)  # limpando local anterior da peca
 
     # Colocando a peca na nova posicao
-    if 'dama' in peca:
+    if 'dama_branca' in peca:
         tela.blit(dama_clara, (tamanho * pos[1] + 1, tamanho * pos[0] + 1))
-    if 'Ptorre_branco' in peca:
+    if 'dama_preta' in peca:
         tela.blit(dama_escura, (tamanho * pos[1] + 1, tamanho * pos[0] + 1))
-    if 'Pcavalo_branco' in peca:
+    if 'rainha_branca' in peca:
         tela.blit(rainha_clara, (tamanho * pos[1] + 1, tamanho * pos[0] + 1))
-    if 'Pbispo_branco' in peca:
+    if 'rainha_preta' in peca:
         tela.blit(rainha_escura, (tamanho * pos[1] + 1, tamanho * pos[0] + 1))
 
     return posicoes, turn, possibilidades
@@ -208,8 +204,8 @@ while jogo:
                 if selecao in posicoes.values():  # Apenas se a peca selecionada for a de seu turno
                     for i in range(len(list(posicoes.values()))):
                         if (list(posicoes.values())[i] == selecao) and (
-                                ((turno == 1) and ('branco' in list(posicoes.keys())[i])) or (
-                                (turno == -1) and ('preto' in list(posicoes.keys())[i]))):
+                                ((turno == 1) and ('branca' in list(posicoes.keys())[i])) or (
+                                (turno == -1) and ('preta' in list(posicoes.keys())[i]))):
                             possibilidades, OldPos = select(selecao, possibilidades, turno)
             pygame.display.update()
 
