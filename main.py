@@ -77,6 +77,7 @@ def quadrado(square, border):  # Pinta quadrado limpo novamente:
 
 
 def select(pos, possibilidades):
+    print('run')
     keys = list(posicoes.keys())
     values = list(posicoes.values())
     peca = ''
@@ -224,7 +225,7 @@ def move(pos, Old_Pos, posicoes, turn, possibilidades, comida, comer):
     if pos not in possibilidades and pos != Old_Pos:  # Para que o jogador siga as regras
         pygame.mixer.music.load("assets/sounds/wrong.ogg")
         pygame.mixer.music.play(1)
-        return posicoes, turn, possibilidades
+        return posicoes, turn, possibilidades, Old_Pos
 
     if pos in possibilidades and pos != Old_Pos:
         pygame.mixer.music.load("assets/sounds/move.ogg")
@@ -275,7 +276,7 @@ def move(pos, Old_Pos, posicoes, turn, possibilidades, comida, comer):
     if 'rainha_preta' in peca:
         tela.blit(rainha_escura, (tamanho * pos[1] + 1, tamanho * pos[0] + 1))
 
-    return posicoes, turn, possibilidades
+    return posicoes, turn, possibilidades, Old_Pos ## trocar ultimo valor por 'pos' para resolver erro
 
 
 posicoes = Start()  # Iniciando o Jogo
@@ -299,7 +300,7 @@ while jogo:
                     posicoes = Start()
                     turno = 1
                 else:  # Movendo
-                    posicoes, turno, possibilidades = move(selecao, OldPos, posicoes, turno, possibilidades, comida, comer)
+                    posicoes, turno, possibilidades, OldPos = move(selecao, OldPos, posicoes, turno, possibilidades, comida, comer)
                 selecao = ()  # tornar seleçao vazia
 
             else:
