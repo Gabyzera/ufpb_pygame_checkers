@@ -76,14 +76,14 @@ def Start(modo):
 
 def quadrado(square, border):  # Pinta quadrado limpo novamente:
     if border == True and 0 not in square and 9 not in square:
-        if ((((square[0]) % 2) == 0) and (((square[1]) % 2) != 0)) or (
-                (((square[0]) % 2) != 0) and (((square[1]) % 2) == 0)):
+        if ((((square[0]) % 2) == 0) and (((square[1]) % 2) > 0)) or (
+                (((square[0]) % 2) > 0) and (((square[1]) % 2) == 0)):
             pygame.draw.rect(tela, marrom, [tamanho * (square[1]), tamanho * (square[0]), tamanho, tamanho], 5)
         else:
             pygame.draw.rect(tela, bege, [tamanho * (square[1]), tamanho * (square[0]), tamanho, tamanho], 5)
     elif border == False:
-        if ((((square[0]) % 2) == 0) and (((square[1]) % 2) != 0)) or (
-                (((square[0]) % 2) != 0) and (((square[1]) % 2) == 0)):
+        if ((((square[0]) % 2) == 0) and (((square[1]) % 2) > 0)) or (
+                (((square[0]) % 2) > 0) and (((square[1]) % 2) == 0)):
             pygame.draw.rect(tela, marrom, [tamanho * (square[1]), tamanho * (square[0]), tamanho, tamanho])
         else:
             pygame.draw.rect(tela, bege, [tamanho * (square[1]), tamanho * (square[0]), tamanho, tamanho])
@@ -143,8 +143,8 @@ def select(pos, possibilidades, turn):
         if ((pos[0] - 1), (pos[1] + 1)) in values:  # Se houver um inimigo para comer na direita
             for i in range(len(values)):
                 if (values[i] == ((pos[0] - 1), (pos[1] + 1))) and ('escura' in keys[i]) and (
-                (pos[0] - 2), (pos[1] + 2)) not in values and (pos[0] - 2) != 0 and (pos[0] - 2) != 9 and (
-                        pos[1] + 2) != 0 and (pos[1] + 2) != 9:
+                (pos[0] - 2), (pos[1] + 2)) not in values and (pos[0] - 2) > 0 and (pos[0] - 2) < 9 and (
+                        pos[1] + 2) > 0 and (pos[1] + 2) < 9:
                     comida.append([keys[i], values[i]])
                     comer += 1
                     pygame.draw.rect(tela, azul, [tamanho * (pos[1] + 2), tamanho * (pos[0] - 2), tamanho, tamanho], 5)
@@ -153,8 +153,8 @@ def select(pos, possibilidades, turn):
         if ((pos[0] - 1), (pos[1] - 1)) in values:  # Se houver um inimigo para comer na esquerda
             for i in range(len(values)):
                 if (values[i] == ((pos[0] - 1), (pos[1] - 1))) and ('escura' in keys[i]) and (
-                (pos[0] - 2), (pos[1] - 2)) not in values and (pos[0] - 2) != 0 and (pos[0] - 2) != 9 and (
-                        pos[1] - 2) != 0 and (pos[1] - 2) != 9:
+                (pos[0] - 2), (pos[1] - 2)) not in values and (pos[0] - 2) > 0 and (pos[0] - 2) < 9 and (
+                        pos[1] - 2) > 0 and (pos[1] - 2) < 9:
                     comida.append([keys[i], values[i]])
                     comer += 1
                     pygame.draw.rect(tela, azul, [tamanho * (pos[1] - 2), tamanho * (pos[0] - 2), tamanho, tamanho], 5)
@@ -163,8 +163,8 @@ def select(pos, possibilidades, turn):
         if ((pos[0] + 1), (pos[1] + 1)) in values:  # Se houver um inimigo para comer no canto inferior direito
             for i in range(len(values)):
                 if (values[i] == ((pos[0] + 1), (pos[1] + 1))) and ('escura' in keys[i]) and (
-                (pos[0] + 2), (pos[1] + 2)) not in values and (pos[0] + 2) != 0 and (pos[0] + 2) != 9 and (
-                        pos[1] + 2) != 0 and (pos[1] + 2) != 9:
+                (pos[0] + 2), (pos[1] + 2)) not in values and (pos[0] + 2) > 0 and (pos[0] + 2) < 9 and (
+                        pos[1] + 2) > 0 and (pos[1] + 2) < 9:
                     comida.append([keys[i], values[i]])
                     comer += 1
                     pygame.draw.rect(tela, azul, [tamanho * (pos[1] + 2), tamanho * (pos[0] + 2), tamanho, tamanho], 5)
@@ -173,19 +173,19 @@ def select(pos, possibilidades, turn):
         if ((pos[0] + 1), (pos[1] - 1)) in values:  # Se houver um inimigo para comer no canto inferior esquerdo
             for i in range(len(values)):
                 if (values[i] == ((pos[0] + 1), (pos[1] - 1))) and ('escura' in keys[i]) and (
-                (pos[0] + 2), (pos[1] - 2)) not in values and (pos[0] + 2) != 0 and (pos[0] + 2) != 9 and (
-                        pos[1] - 2) != 0 and (pos[1] - 2) != 9:
+                (pos[0] + 2), (pos[1] - 2)) not in values and (pos[0] + 2) > 0 and (pos[0] + 2) < 9 and (
+                        pos[1] - 2) > 0 and (pos[1] - 2) < 9:
                     comida.append([keys[i], values[i]])
                     comer += 1
                     pygame.draw.rect(tela, azul, [tamanho * (pos[1] - 2), tamanho * (pos[0] + 2), tamanho, tamanho], 5)
                     possibilidades.append(((pos[0] + 2), (pos[1] - 2)))
 
         if comer == 0: ## apenas se a peca não tiver que comer nenhuma outra o movimento normal sera usado
-            if (((pos[0] - 1), pos[1] + 1) not in values) and (pos[0] - 1) != 0 and (pos[0] - 1) != 9 and (pos[1] + 1) != 0 and (pos[1] + 1) != 9:  # Movimento comum
+            if (((pos[0] - 1), pos[1] + 1) not in values) and (pos[0] - 1) > 0 and (pos[0] - 1) < 9 and (pos[1] + 1) > 0 and (pos[1] + 1) < 9:  # Movimento comum
                 pygame.draw.rect(tela, azul, [tamanho * (pos[1] + 1), tamanho * (pos[0] - 1), tamanho, tamanho], 5)
                 possibilidades.append(((pos[0] - 1), (pos[1] + 1)))
 
-            if (((pos[0] - 1), pos[1] - 1) not in values) and (pos[0] - 1) != 0 and (pos[0] - 1) != 9 and (pos[1] - 1) != 0 and (pos[1] - 1) != 9:  # Movimento comum
+            if (((pos[0] - 1), pos[1] - 1) not in values) and (pos[0] - 1) > 0 and (pos[0] - 1) < 9 and (pos[1] - 1) > 0 and (pos[1] - 1) < 9:  # Movimento comum
                 pygame.draw.rect(tela, azul, [tamanho * (pos[1] - 1), tamanho * (pos[0] - 1), tamanho, tamanho], 5)
                 possibilidades.append(((pos[0] - 1), (pos[1] - 1)))
 
@@ -193,8 +193,8 @@ def select(pos, possibilidades, turn):
         if ((pos[0] + 1), (pos[1] + 1)) in values:  # Se houver um inimigo para comer na direita
             for i in range(len(values)):
                 if (values[i] == ((pos[0] + 1), (pos[1] + 1))) and ('clara' in keys[i]) and (
-                (pos[0] + 2), (pos[1] + 2)) not in values and (pos[0] + 2) != 0 and (pos[0] + 2) != 9 and (
-                        pos[1] + 2) != 0 and (pos[1] + 2) != 9:
+                (pos[0] + 2), (pos[1] + 2)) not in values and (pos[0] + 2) > 0 and (pos[0] + 2) < 9 and (
+                        pos[1] + 2) > 0 and (pos[1] + 2) < 9:
                     comida.append([keys[i], values[i]])
                     comer += 1
                     pygame.draw.rect(tela, azul, [tamanho * (pos[1] + 2), tamanho * (pos[0] + 2), tamanho, tamanho], 5)
@@ -203,8 +203,8 @@ def select(pos, possibilidades, turn):
         if ((pos[0] + 1), (pos[1] - 1)) in values:  # Se houver um inimigo para comer na esquerda
             for i in range(len(values)):
                 if (values[i] == ((pos[0] + 1), (pos[1] - 1))) and ('clara' in keys[i]) and (
-                (pos[0] + 2), (pos[1] - 2)) not in values and (pos[0] + 2) != 0 and (pos[0] + 2) != 9 and (
-                        pos[1] - 2) != 0 and (pos[1] - 2) != 9:
+                (pos[0] + 2), (pos[1] - 2)) not in values and (pos[0] + 2) > 0 and (pos[0] + 2) < 9 and (
+                        pos[1] - 2) > 0 and (pos[1] - 2) < 9:
                     comida.append([keys[i], values[i]])
                     comer += 1
                     pygame.draw.rect(tela, azul, [tamanho * (pos[1] - 2), tamanho * (pos[0] + 2), tamanho, tamanho], 5)
@@ -213,8 +213,8 @@ def select(pos, possibilidades, turn):
         if ((pos[0] - 1), (pos[1] + 1)) in values:  # Se houver um inimigo para comer no canto inferior direito
             for i in range(len(values)):
                 if (values[i] == ((pos[0] - 1), (pos[1] + 1))) and ('clara' in keys[i]) and (
-                (pos[0] - 2), (pos[1] + 2)) not in values and (pos[0] - 2) != 0 and (pos[0] - 2) != 9 and (
-                        pos[1] + 2) != 0 and (pos[1] + 2) != 9:
+                (pos[0] - 2), (pos[1] + 2)) not in values and (pos[0] - 2) > 0 and (pos[0] - 2) < 9 and (
+                        pos[1] + 2) > 0 and (pos[1] + 2) < 9:
                     comida.append([keys[i], values[i]])
                     comer += 1
                     pygame.draw.rect(tela, azul, [tamanho * (pos[1] + 2), tamanho * (pos[0] - 2), tamanho, tamanho], 5)
@@ -223,19 +223,19 @@ def select(pos, possibilidades, turn):
         if ((pos[0] - 1), (pos[1] - 1)) in values:  # Se houver um inimigo para comer no canto inferior esquerdo
             for i in range(len(values)):
                 if (values[i] == ((pos[0] - 1), (pos[1] - 1))) and ('clara' in keys[i]) and (
-                 (pos[0] - 2), (pos[1] - 2)) not in values and (pos[0] - 2) != 0 and (pos[0] - 2) != 9 and (
-                        pos[1] - 2) != 0 and (pos[1] - 2) != 9:
+                 (pos[0] - 2), (pos[1] - 2)) not in values and (pos[0] - 2) > 0 and (pos[0] - 2) < 9 and (
+                        pos[1] - 2) > 0 and (pos[1] - 2) < 9:
                     comida.append([keys[i], values[i]])
                     comer += 1
                     pygame.draw.rect(tela, azul, [tamanho * (pos[1] - 2), tamanho * (pos[0] - 2), tamanho, tamanho], 5)
                     possibilidades.append(((pos[0] - 2), (pos[1] - 2)))
 
         if comer == 0:
-            if (((pos[0] + 1), pos[1] + 1) not in values) and (pos[0] + 1) != 0 and (pos[0] + 1) != 9 and (pos[1] + 1) != 0 and (pos[1] + 1) != 9:  # Movimento comum
+            if (((pos[0] + 1), pos[1] + 1) not in values) and (pos[0] + 1) > 0 and (pos[0] + 1) < 9 and (pos[1] + 1) > 0 and (pos[1] + 1) < 9:  # Movimento comum
                 pygame.draw.rect(tela, azul, [tamanho * (pos[1] + 1), tamanho * (pos[0] + 1), tamanho, tamanho], 5)
                 possibilidades.append(((pos[0] + 1), (pos[1] + 1)))
 
-            if (((pos[0] + 1), pos[1] - 1) not in values) and (pos[0] + 1) != 0 and (pos[0] + 1) != 9 and (pos[1] - 1) != 0 and (pos[1] - 1) != 9:  # Movimento comum
+            if (((pos[0] + 1), pos[1] - 1) not in values) and (pos[0] + 1) > 0 and (pos[0] + 1) < 9 and (pos[1] - 1) > 0 and (pos[1] - 1) < 9:  # Movimento comum
                 pygame.draw.rect(tela, azul, [tamanho * (pos[1] - 1), tamanho * (pos[0] + 1), tamanho, tamanho], 5)
                 possibilidades.append(((pos[0] + 1), (pos[1] - 1)))
 
@@ -244,39 +244,40 @@ def select(pos, possibilidades, turn):
         exe1,exe2,exe3,exe4 = True,True,True,True
         for casa in range(1, 9): 
             #direita inferior
-            if exe1 == True and (((pos[0] + casa), pos[1] - casa) not in values) and (pos[0] + casa) != 0 and (pos[0] + casa) != 9 and (pos[1] - casa) != 0 and (pos[1] - casa) != 9:  # Movimento comum
+            if exe1 == True and (((pos[0] + casa), pos[1] - casa) not in values) and (pos[0] + casa) > 0 and (pos[0] + casa) < 9 and (pos[1] - casa) > 0 and (pos[1] - casa) < 9:  # Movimento comum
               pygame.draw.rect(tela, azul, [tamanho * (pos[1] - casa), tamanho * (pos[0] + casa), tamanho, tamanho], 5)
               possibilidades.append(((pos[0] + casa), (pos[1] - casa)))
             elif exe1 == True and ((pos[0] + casa), pos[1] - casa) in values:
                 exe1 = False
                 for i in range(len(values)): 
-                    if values[i] == ((pos[0] + casa), pos[1] - casa) and (('clara' in keys[i] and turn == -1) or ('escura' in keys[i] and turn == 1)) and ((pos[0] + (casa+1)), (pos[1] - (casa + 1))) not in values and ((pos[0] + (casa+1))) != 0 and ((pos[0] + (casa+1))) != 9 and ((pos[1] - (casa+1))) != 0 and ((pos[1] - (casa+1))) != 9:
+                    if values[i] == ((pos[0] + casa), pos[1] - casa) and (('clara' in keys[i] and turn == -1) or ('escura' in keys[i] and turn == 1)) and ((pos[0] + (casa+1)), (pos[1] - (casa + 1))) not in values and ((pos[0] + (casa+1))) > 0 and ((pos[0] + (casa+1))) < 9 and ((pos[1] - (casa+1))) > 0 and ((pos[1] - (casa+1))) < 9:
                         comida.append([keys[i], values[i]])
                         comer += 1
                         pygame.draw.rect(tela, azul, [tamanho * (pos[1] - (casa + 1)), tamanho * (pos[0] + (casa+1)), tamanho, tamanho], 5)
                         possibilidades.append(((pos[0] + (casa+1)), (pos[1] - (casa + 1))))
 
             #esquerda inferior 
-            if exe2 == True and (((pos[0] - casa), pos[1] + casa) not in values) and (pos[0] - casa) != 0 and (pos[0] - casa) != 9 and (pos[1] + casa) != 0 and (pos[1] + casa) != 9:  # Movimento comum
+            if exe2 == True and (((pos[0] - casa), pos[1] + casa) not in values) and (pos[0] - casa) > 0 and (pos[0] - casa) < 9 and (pos[1] + casa) > 0 and (pos[1] + casa) < 9:  # Movimento comum
               pygame.draw.rect(tela, azul, [tamanho * (pos[1] + casa), tamanho * (pos[0] - casa), tamanho, tamanho], 5)
               possibilidades.append(((pos[0] - casa), (pos[1] + casa)))
             elif ((pos[0] - casa), pos[1] + casa) in values:
                 exe2 = False
                 for i in range(len(values)):
-                    if values[i] == ((pos[0] - casa), pos[1] + casa) and (('clara' in keys[i] and turn == -1) or ('escura' in keys[i] and turn == 1)) and ((pos[0] - (casa+1)), (pos[1] + (casa + 1))) not in values and ((pos[0] - (casa+1))) != 0 and ((pos[0] - (casa+1))) != 9 and ((pos[1] - (casa+1))) != 0 and ((pos[1] - (casa+1))) != 9:
+                    if values[i] == ((pos[0] - casa), pos[1] + casa) and (('clara' in keys[i] and turn == -1) or ('escura' in keys[i] and turn == 1)) and ((pos[0] - (casa+1)), (pos[1] + (casa + 1))) not in values and ((pos[0] - (casa+1))) > 0 and ((pos[0] - (casa+1))) < 9 and ((pos[1] + (casa+1))) > 0 and ((pos[1] + (casa+1))) < 9:
                         comida.append([keys[i], values[i]])
                         comer += 1
                         pygame.draw.rect(tela, azul, [tamanho * (pos[1] + (casa + 1)), tamanho * (pos[0] - (casa+1)), tamanho, tamanho], 5)
                         possibilidades.append(((pos[0] - (casa+1)), (pos[1] + (casa + 1))))
 
             #direita superior
-            if exe3 == True and (((pos[0] + casa), pos[1] + casa) not in values) and (pos[0] + casa) != 0 and (pos[0] + casa) != 9 and (pos[1] + casa) != 0 and (pos[1] + casa) != 9:  # Movimento comum
+            if exe3 == True and (((pos[0] + casa), pos[1] + casa) not in values) and (pos[0] + casa) > 0 and (pos[0] + casa) < 9 and (pos[1] + casa) > 0 and (pos[1] + casa) < 9:  # Movimento comum
               pygame.draw.rect(tela, azul, [tamanho * (pos[1] + casa), tamanho * (pos[0] + casa), tamanho, tamanho], 5)
               possibilidades.append(((pos[0] + casa), (pos[1] + casa)))
             elif ((pos[0] + casa), pos[1] + casa) in values:
+                print('')
                 exe3 = False
                 for i in range(len(values)):
-                    if values[i] == ((pos[0] + casa), pos[1] + casa) and (('clara' in keys[i] and turn == -1) or ('escura' in keys[i] and turn == 1)) and ((pos[0] + (casa+1)), (pos[1] + (casa + 1))) not in values and (pos[0] + (casa+1)) != 0 and (pos[0] + (casa+1)) != 9 and (pos[1] + (casa+1)) != 0 and (pos[1] + (casa+1)) != 9:
+                    if values[i] == ((pos[0] + casa), pos[1] + casa) and (('clara' in keys[i] and turn == -1) or ('escura' in keys[i] and turn == 1)) and ((pos[0] + (casa+1)), (pos[1] + (casa + 1))) not in values and (pos[0] + (casa+1)) > 0 and (pos[0] + (casa+1)) < 9 and (pos[1] + (casa+1)) > 0 and (pos[1] + (casa+1)) < 9:
                         comida.append([keys[i], values[i]])
                         comer += 1
                         pygame.draw.rect(tela, azul, [tamanho * (pos[1] + (casa + 1)), tamanho * (pos[0] + (casa+1)), tamanho, tamanho], 5)
