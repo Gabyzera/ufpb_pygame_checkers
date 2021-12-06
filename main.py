@@ -283,6 +283,20 @@ def select(pos, possibilidades, turn):
                         pygame.draw.rect(tela, azul, [tamanho * (pos[1] + (casa + 1)), tamanho * (pos[0] + (casa+1)), tamanho, tamanho], 5)
                         possibilidades.append(((pos[0] + (casa+1)), (pos[1] + (casa + 1))))
 
+            # esquerda superior
+            if exe4 == True and (((pos[0] - casa), pos[1] - casa) not in values) and (pos[0] - casa) > 0 and (pos[0] - casa) < 9 and (pos[1] - casa) > 0 and (pos[1] - casa) < 9:  # Movimento comum
+              pygame.draw.rect(tela, azul, [tamanho * (pos[1] - casa), tamanho * (pos[0] - casa), tamanho, tamanho], 5)
+              possibilidades.append(((pos[0] - casa), (pos[1] - casa)))
+            elif ((pos[0] - casa), pos[1] - casa) in values:
+                print('')
+                exe3 = False
+                for i in range(len(values)):
+                    if values[i] == ((pos[0] - casa), pos[1] - casa) and (('clara' in keys[i] and turn == -1) or ('escura' in keys[i] and turn == 1)) and ((pos[0] - (casa+1)), (pos[1] - (casa + 1))) not in values and (pos[0] - (casa+1)) > 0 and (pos[0] - (casa+1)) < 9 and (pos[1] - (casa+1)) > 0 and (pos[1] - (casa+1)) < 9:
+                        comida.append([keys[i], values[i]])
+                        comer += 1
+                        pygame.draw.rect(tela, azul, [tamanho * (pos[1] - (casa + 1)), tamanho * (pos[0] - (casa+1)), tamanho, tamanho], 5)
+                        possibilidades.append(((pos[0] - (casa+1)), (pos[1] - (casa + 1))))
+
     return possibilidades, pos, comida, comer
 
 
@@ -330,6 +344,7 @@ def move(pos, Old_Pos, posicoes, turn, possibilidades, comida, comer):
                 posicoes[rainha] = posicoes[keys[j]]
                 del posicoes[keys[j]]
                 peca = rainha
+
 
     if comer != 0:
         valores = []
