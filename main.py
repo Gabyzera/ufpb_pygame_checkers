@@ -10,7 +10,6 @@ azul = (0, 225, 255)
 
 tamanho = 70  # tamanho de cada quadrado
 linhas_colunas = 8
-
 tela = pygame.display.set_mode(((linhas_colunas + 2) * tamanho, (linhas_colunas + 2) * tamanho))
 nome = pygame.display.set_caption('Damas | Chekers')
 
@@ -330,14 +329,11 @@ def move(pos, Old_Pos, posicoes, turn, possibilidades, comida, comer):
     keys = list(posicoes.keys())
     values = list(posicoes.values())
 
-    if pos not in possibilidades and pos != Old_Pos:  # Para que o jogador siga as regras
-        pygame.mixer.music.load("assets/sounds/wrong.ogg")
-        pygame.mixer.music.play(1)
-        return posicoes, turn, possibilidades, False, Old_Pos
-
     if pos in possibilidades and pos != Old_Pos:
         pygame.mixer.music.load("assets/sounds/move.ogg")
         pygame.mixer.music.play(1)
+    else:
+        return posicoes, turn, possibilidades, False, Old_Pos
 
     if comer != 0 and pos != Old_Pos:
         if comer == 1:
@@ -395,9 +391,9 @@ def move(pos, Old_Pos, posicoes, turn, possibilidades, comida, comer):
             if valores[3] != 0:
                 verificador = True
 
-    return posicoes, turn, possibilidades, verificador, Old_Pos ## trocar ultimo valor por 'pos' para resolver erro
+    return posicoes, turn, possibilidades, verificador, pos ## trocar ultimo valor por 'pos' para resolver erro
 
-modo = -1
+modo = 1
 posicoes,dama_clara, dama_escura, rainha_clara,rainha_escura = Start(modo)  # Iniciando o Jogo
 jogo = True
 selecao = ()  # tupla para armazenar selecao do jogador
@@ -428,8 +424,6 @@ while jogo:
                     posicoes, turno, possibilidades, verificador, OldPos = move(selecao, OldPos, posicoes, turno, possibilidades, comida, comer)
                 selecao = ()  # tornar seleçao vazia
                 ponts(posicoes) 
-
-
 
             else:
                 selecao = (linha, coluna)
