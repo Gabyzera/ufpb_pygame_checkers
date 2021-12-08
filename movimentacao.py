@@ -145,10 +145,9 @@ def select(pos, posicoes, possibilidades, turn, sopro, desenhar):
 
     # modificar:
     if 'rainha' in peca:  # movimento da rainha:
+        break_move = [False,False,False,False]
         for casa in range(1, 9): 
-
             for j in range(len(values)): 
-                break_move = [False,False,False,False]
 
                 if values[j] == ((pos[0] + casa), pos[1] - casa) and (('clara' in keys[j] and turn == -1) or ('escura' in keys[j] and turn == 1)) and ((pos[0] + (casa+1)), (pos[1] - (casa + 1))) not in values and ((pos[0] + (casa+1))) > 0 and ((pos[0] + (casa+1))) < 9 and ((pos[1] - (casa+1))) > 0 and ((pos[1] - (casa+1))) < 9:
                     comida.append([keys[j], values[j]])
@@ -177,30 +176,38 @@ def select(pos, posicoes, possibilidades, turn, sopro, desenhar):
                     if desenhar == True:
                         pygame.draw.rect(tela, azul, [tamanho * (pos[1] - (casa + 1)), tamanho * (pos[0] - (casa+1)), tamanho, tamanho], 5)
                     possibilidades.append(((pos[0] - (casa+1)), (pos[1] - (casa + 1))))
+            
+                #direita inferior
+                if break_move[0] == False and comer == 0 and sopro == False and (((pos[0] + casa), pos[1] - casa) not in values) and (pos[0] + casa) > 0 and (pos[0] + casa) < 9 and (pos[1] - casa) > 0 and (pos[1] - casa) < 9:  # Movimento comum
+                    if desenhar == True:
+                        pygame.draw.rect(tela, azul, [tamanho * (pos[1] - casa), tamanho * (pos[0] + casa), tamanho, tamanho], 5)
+                    possibilidades.append(((pos[0] + casa), (pos[1] - casa)))
+                elif ((pos[0] + casa), (pos[1] - casa)) == values[j] and (('clara' in keys[j] and turn == 1) or ('escura' in keys[j] and turn == -1)):
+                    break_move[0] = True
 
-            #direita inferior
-            if comer == 0 and sopro == False and (((pos[0] + casa), pos[1] - casa) not in values) and (pos[0] + casa) > 0 and (pos[0] + casa) < 9 and (pos[1] - casa) > 0 and (pos[1] - casa) < 9:  # Movimento comum
-              if desenhar == True:
-                  pygame.draw.rect(tela, azul, [tamanho * (pos[1] - casa), tamanho * (pos[0] + casa), tamanho, tamanho], 5)
-              possibilidades.append(((pos[0] + casa), (pos[1] - casa)))
+                #esquerda inferior 
+                if break_move[1] == False and comer == 0 and sopro == False and (((pos[0] - casa), pos[1] + casa) not in values) and (pos[0] - casa) > 0 and (pos[0] - casa) < 9 and (pos[1] + casa) > 0 and (pos[1] + casa) < 9:  # Movimento comum
+                    if desenhar == True: 
+                        pygame.draw.rect(tela, azul, [tamanho * (pos[1] + casa), tamanho * (pos[0] - casa), tamanho, tamanho], 5)
+                    possibilidades.append(((pos[0] - casa), (pos[1] + casa)))
+                elif ((pos[0] - casa), (pos[1] + casa)) == values[j] and (('clara' in keys[j] and turn == 1) or ('escura' in keys[j] and turn == -1)):
+                    break_move[1] = True
 
-            #esquerda inferior 
-            if comer == 0 and sopro == False and (((pos[0] - casa), pos[1] + casa) not in values) and (pos[0] - casa) > 0 and (pos[0] - casa) < 9 and (pos[1] + casa) > 0 and (pos[1] + casa) < 9:  # Movimento comum
-              if desenhar == True: 
-                pygame.draw.rect(tela, azul, [tamanho * (pos[1] + casa), tamanho * (pos[0] - casa), tamanho, tamanho], 5)
-              possibilidades.append(((pos[0] - casa), (pos[1] + casa)))
+                #direita superior
+                if break_move[2] == False and comer == 0 and sopro == False and (((pos[0] + casa), pos[1] + casa) not in values) and (pos[0] + casa) > 0 and (pos[0] + casa) < 9 and (pos[1] + casa) > 0 and (pos[1] + casa) < 9:  # Movimento comum
+                    if desenhar == True: 
+                        pygame.draw.rect(tela, azul, [tamanho * (pos[1] + casa), tamanho * (pos[0] + casa), tamanho, tamanho], 5)
+                    possibilidades.append(((pos[0] + casa), (pos[1] + casa)))
+                elif ((pos[0] + casa), (pos[1] + casa)) == values[j] and (('clara' in keys[j] and turn == 1) or ('escura' in keys[j] and turn == -1)):
+                    break_move[2] = True
 
-            #direita superior
-            if comer == 0 and sopro == False and (((pos[0] + casa), pos[1] + casa) not in values) and (pos[0] + casa) > 0 and (pos[0] + casa) < 9 and (pos[1] + casa) > 0 and (pos[1] + casa) < 9:  # Movimento comum
-              if desenhar == True: 
-                pygame.draw.rect(tela, azul, [tamanho * (pos[1] + casa), tamanho * (pos[0] + casa), tamanho, tamanho], 5)
-              possibilidades.append(((pos[0] + casa), (pos[1] + casa)))
-
-            # esquerda superior
-            if comer == 0 and sopro == False and (((pos[0] - casa), pos[1] - casa) not in values) and (pos[0] - casa) > 0 and (pos[0] - casa) < 9 and (pos[1] - casa) > 0 and (pos[1] - casa) < 9:  # Movimento comum
-              if desenhar == True: 
-                pygame.draw.rect(tela, azul, [tamanho * (pos[1] - casa), tamanho * (pos[0] - casa), tamanho, tamanho], 5)
-              possibilidades.append(((pos[0] - casa), (pos[1] - casa)))
+                # esquerda superior
+                if break_move[3] == False and comer == 0 and sopro == False and (((pos[0] - casa), pos[1] - casa) not in values) and (pos[0] - casa) > 0 and (pos[0] - casa) < 9 and (pos[1] - casa) > 0 and (pos[1] - casa) < 9:  # Movimento comum
+                    if desenhar == True: 
+                        pygame.draw.rect(tela, azul, [tamanho * (pos[1] - casa), tamanho * (pos[0] - casa), tamanho, tamanho], 5)
+                    possibilidades.append(((pos[0] - casa), (pos[1] - casa)))
+                elif ((pos[0] - casa), (pos[1] - casa)) == values[j] and (('clara' in keys[j] and turn == 1) or ('escura' in keys[j] and turn == -1)):
+                    break_move[3] = True
 
     return possibilidades, pos, comida, comer
 
