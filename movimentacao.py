@@ -287,7 +287,7 @@ def move(pos, Old_Pos, posicoes, turn, possibilidades, comida, comer, sprites):
     if 'rainha_escura' in peca:
         tela.blit(rainha_escura, (tamanho * pos[1] + 1, tamanho * pos[0] + 1))
 
-    return posicoes, turn, possibilidades, Old_Pos ## trocar ultimo valor por 'pos' para resolver erro
+    return posicoes, turn, possibilidades, pos
 
 ## Verificador de sopro
 def pode_comer(turn, posicoes, possibilidades):
